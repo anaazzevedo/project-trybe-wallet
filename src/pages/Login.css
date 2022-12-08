@@ -1,0 +1,44 @@
+body {
+  background-color: #1d3557;
+}
+
+.h1 {
+  color: #edede9;
+}
+
+.form-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15%;
+}
+
+.button {
+  background-color: #457b9d;
+  border: black solid 1px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px #eee;
+  color: white;
+  margin-top: 10px;
+  padding: 0.5%;
+  text-shadow: none;
+  width: 15.5%;
+}
+
+.button:hover {
+  background-color: #a8dadc;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px #eee;
+  color: #edede9;
+  text-shadow: none;
+}
+
+.input-email {
+  margin-bottom: 5px;
+  padding: 2%;
+}
+
+.input-pass {
+  padding: 2%;
+}
