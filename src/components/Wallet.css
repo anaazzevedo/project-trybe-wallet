@@ -1,0 +1,15 @@
+.form {
+  background-color: #344e41;
+  padding: 2%;
+}
+
+.all {
+  border: black 2px solid;
+  border-radius: 5%;
+  margin-left: 8px;
+  margin-right: 20px;
+}
+
+.label {
+  color: white;
+}
