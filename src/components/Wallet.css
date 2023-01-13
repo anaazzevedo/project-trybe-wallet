@@ -1,7 +1,17 @@
 .form {
   background-color: #344e41;
   padding: 2%;
+  width: 100%;
 }
+
+.value {
+  width: 8%;
+}
+
+.description {
+  width: 8%;
+}
+
 
 .all {
   border: black 2px solid;
@@ -12,4 +22,14 @@
 
 .label {
   color: white;
+}
+
+.btn {
+  background-color: #1b4332;
+  border: black solid 1px;
+  border-radius: 20px;
+  color: white;
+  margin-left: 22px;
+  padding: 0.5%;
+  width: 10%;
 }
