@@ -12,8 +12,7 @@ export const INITIAL_STATE = {
 const reducer = (state) => {
   const { expenses } = state;
   const sum = expenses.reduce((acc, curr) => {
-    const ask = +curr.exchangeRates[curr.currency].ask;
-    const cotação = ask * +curr.value;
+    const cotação = (+curr.exchangeRates[curr.currency].ask * +curr.value) + acc;
     return cotação + acc;
   }, 0);
   return sum;

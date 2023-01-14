@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { renderWithRouterAndRedux } from './tests/helpers/renderWith';
 import Login from './pages/Login';
@@ -52,15 +52,11 @@ describe('Testa a página de login', () => {
 
   test('Verifica elementos da página /carteira', () => {
     renderWithRouterAndRedux(<WalletForm />);
-    const input1 = screen.getByTestId('value-input');
     const input2 = screen.getByRole('textbox');
-    const select2 = screen.getByTestId('method-input');
     const select3 = screen.getByTestId('tag-input');
     const button = screen.getByRole('button', { name: /adicionar despesa/i });
 
-    expect(input1).toBeInTheDocument();
     expect(input2).toBeInTheDocument();
-    expect(select2).toBeInTheDocument();
     expect(select3).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
@@ -78,14 +74,14 @@ describe('Testa a página de login', () => {
     userEvent.type(input1, num);
     userEvent.type(input2, 'trybe');
     userEvent.type(select2, 'Dinheiro');
-    userEvent.type(select3, 'Alimentação');
+    userEvent.type(select3, 'Lazer');
     userEvent.click(button);
 
     setTimeout(() => {
       expect(num).toBeInTheDocument();
       expect('trybe').toBeInTheDocument();
       expect('Dinheiro').toBeInTheDocument();
-      expect('Alimentação').toBeInTheDocument();
+      expect('Lazer').toBeInTheDocument();
     }, seg);
   });
 
@@ -104,27 +100,33 @@ describe('Testa a página de login', () => {
     const description = screen.getByRole('columnheader', { name: /descrição/i });
     const tag = screen.getByRole('columnheader', { name: /tag/i });
     const cambio = screen.getByRole('columnheader', { name: /câmbio utilizado/i });
+    const valorC = screen.getByRole('columnheader', { name: /valor convertido/i });
+    const editar = screen.getByRole('columnheader', { name: /editar\/excluir/i });
+    const valor = screen.getByText('Valor');
+    const moeda = screen.getByText('Moeda');
 
     expect(method).toBeInTheDocument();
     expect(description).toBeInTheDocument();
     expect(tag).toBeInTheDocument();
     expect(cambio).toBeInTheDocument();
+    expect(valorC).toBeInTheDocument();
+    expect(editar).toBeInTheDocument();
+    expect(valor).toBeInTheDocument();
+    expect(moeda).toBeInTheDocument();
   });
 
   test('Verifica elementos do Wallet', () => {
     renderWithRouterAndRedux(<Wallet />);
     const user = screen.getByTestId('email-field');
-    const currency = screen.getByTestId('header-currency-field');
     const total = screen.getByTestId('total-field');
     const img = screen.getByRole('img', { name: /logo trybe/i });
 
     expect(user).toBeInTheDocument();
-    expect(currency).toBeInTheDocument();
     expect(total).toBeInTheDocument();
     expect(img).toBeInTheDocument();
   });
 
-  test('Verifica API', async () => {
+  test('Verifica API', () => {
     renderWithRouterAndRedux(<Wallet />);
     const currencies = screen.getByTestId('header-currency-field');
     const seg = 3000;
@@ -133,7 +135,7 @@ describe('Testa a página de login', () => {
     }, seg);
   });
 
-  test('Verifica elementos do App', async () => {
+  test('Verifica elementos do App', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     const seg = 3000;
 
@@ -145,5 +147,25 @@ describe('Testa a página de login', () => {
     setTimeout(() => {
       expect(user).toBeInTheDocument();
     }, seg);
+  });
+
+  test('Testa botão excluir', () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockData),
+    });
+
+    const moeda = screen.getByText(/moeda:/i);
+    const valor = screen.getByRole('spinbutton');
+    const button = screen.getByRole('button', { name: /adicionar despesa/i });
+    const num = 10;
+    userEvent.type(moeda, 'USD');
+    userEvent.type(valor, num);
+    userEvent.click(button);
+
+    waitFor(() => {
+      expect(global.fetch).toBeCalled();
+    });
   });
 });

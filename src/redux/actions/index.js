@@ -30,11 +30,6 @@ export function sumCurrencies(payload) {
   };
 }
 
-// export const userValues = (expenses) => ({
-//   type: USER_VALUES,
-//   payload: expenses,
-// });
-
 export function walletData() {
   return {
     type: 'WALLET_DATA',
