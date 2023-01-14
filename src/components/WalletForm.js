@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCoinAPI, userValues } from '../redux/actions/index';
+import {
+  getCoinAPI,
+  userValues,
+} from '../redux/actions/index';
 import './Wallet.css';
 
 class WalletForm extends Component {
   constructor() {
     super();
     this.state = {
-      valueUser: 0,
+      valueUser: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      id: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,13 +39,11 @@ class WalletForm extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     dispatch(userValues(this.state));
-    this.setState({
-      valueUser: 0,
+    this.setState((prev) => ({
+      valueUser: '',
       description: '',
-      currency: 'USD',
-      method: '',
-      tag: '',
-    });
+      id: prev.id + 1,
+    }));
   };
 
   savedCoins = async () => {
@@ -54,7 +56,7 @@ class WalletForm extends Component {
   };
 
   render() {
-    const { coins, expenses } = this.props;
+    const { coins } = this.props;
     const { valueUser, description, currency, method, tag } = this.state;
     return (
       <div>
@@ -81,8 +83,8 @@ class WalletForm extends Component {
               onChange={ this.handleChange }
             >
               {
-                coins.map((coin, index) => (
-                  <option key={ index } value={ coin } data-testid="currency-input">
+                coins.map((coin) => (
+                  <option key={ coin } value={ coin }>
                     { coin }
                   </option>
                 ))
@@ -143,10 +145,6 @@ class WalletForm extends Component {
           </button>
 
         </form>
-        {/* { expenses.map((expense, index) => (
-          <h4 key={ index }>{ expense.value }</h4>
-        ))} */}
-        {console.log(expenses)}
       </div>
     );
   }

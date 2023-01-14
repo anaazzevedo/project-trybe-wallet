@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpenses } from '../redux/actions';
 
 class Table extends Component {
+  handleDelete = (id) => {
+    const { dispatch, expenses } = this.props;
+    const state = expenses.filter((expense) => expense.id !== id);
+    console.log(state, id);
+    dispatch(deleteExpenses(state));
+  };
+
+  convertedValue = (value) => {
+    const converted = +value.exchangeRates[value.currency].ask * +value.value;
+    return converted.toFixed(2);
+  };
+
   render() {
     const { expenses } = this.props;
     return (
@@ -22,20 +35,25 @@ class Table extends Component {
         </thead>
         <tbody>
           {
-            expenses.map((expense, index) => (
-              // <tr key={ expense.id }>
-              <tr key={ index }>
-                <td>{expense.value}</td>
+            expenses.map((expense) => (
+              <tr key={ expense.id }>
+                <th>{expense.value}</th>
                 <th>{expense.currency}</th>
                 <th>{expense.method}</th>
-                <td>{expense.description}</td>
+                <th>{expense.description}</th>
                 <th>{expense.tag}</th>
-                {/* <th>{}</th>
-                <th>{}</th>
-                <th>{}</th> */}
+                <th>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</th>
+                <th>{this.convertedValue(expense)}</th>
+                <th>{expense.exchangeRates[expense.currency].name}</th>
                 <td>
-                  <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
+                  <button type="button">Editar despesa</button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleDelete(expense.id) }
+                  >
+                    Excluir
+                  </button>
                 </td>
               </tr>
             ))

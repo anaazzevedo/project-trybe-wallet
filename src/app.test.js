@@ -91,13 +91,9 @@ describe('Testa a página de login', () => {
 
   test('Verifica elementos do Header', () => {
     renderWithRouterAndRedux(<Header />);
-    // const user = screen.getByTestId('email-field');
-    // const currency = screen.getByTestId('header-currency-field');
     const total = screen.getByTestId('total-field');
     const img = screen.getByRole('img', { name: /logo trybe/i });
 
-    // expect(user).toBeInTheDocument();
-    // expect(currency).toBeInTheDocument();
     expect(total).toBeInTheDocument();
     expect(img).toBeInTheDocument();
   });
