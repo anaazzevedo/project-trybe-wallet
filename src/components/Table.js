@@ -37,14 +37,14 @@ class Table extends Component {
           {
             expenses.map((expense) => (
               <tr key={ expense.id }>
-                <th>{expense.value}</th>
-                <th>{expense.currency}</th>
-                <th>{expense.method}</th>
-                <th>{expense.description}</th>
-                <th>{expense.tag}</th>
-                <th>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</th>
-                <th>{this.convertedValue(expense)}</th>
-                <th>{expense.exchangeRates[expense.currency].name}</th>
+                <td>{Number(expense.value).toFixed(2)}</td>
+                <td>{expense.currency}</td>
+                <td>{expense.method}</td>
+                <td>{expense.description}</td>
+                <td>{expense.tag}</td>
+                <td>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+                <td>{this.convertedValue(expense)}</td>
+                <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
                   <button type="button">Editar despesa</button>
                   <button
