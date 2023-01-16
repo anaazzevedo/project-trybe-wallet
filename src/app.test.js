@@ -149,7 +149,7 @@ describe('Testa a página de login', () => {
     }, seg);
   });
 
-  test('Testa botão excluir', () => {
+  test('Testa button Adicionar', () => {
     renderWithRouterAndRedux(<Wallet />);
 
     global.fetch = jest.fn().mockResolvedValue({

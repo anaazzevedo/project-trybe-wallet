@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpenses } from '../redux/actions';
+import { deleteExpenses, sumCurrencies } from '../redux/actions';
 
 class Table extends Component {
   handleDelete = (id) => {
     const { dispatch, expenses } = this.props;
     const state = expenses.filter((expense) => expense.id !== id);
-    console.log(state, id);
     dispatch(deleteExpenses(state));
+    dispatch(sumCurrencies(state));
   };
 
   convertedValue = (value) => {
@@ -49,6 +49,7 @@ class Table extends Component {
                   <button type="button">Editar despesa</button>
                   <button
                     type="button"
+                    id={ expense.id }
                     data-testid="delete-btn"
                     onClick={ () => this.handleDelete(expense.id) }
                   >

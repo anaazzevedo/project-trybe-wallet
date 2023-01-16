@@ -12,7 +12,7 @@ export const INITIAL_STATE = {
 const reducer = (state) => {
   const { expenses } = state;
   const sum = expenses.reduce((acc, curr) => {
-    const cotação = (+curr.exchangeRates[curr.currency].ask * +curr.value) + acc;
+    const cotação = +curr.exchangeRates[curr.currency].ask * +curr.value;
     return cotação + acc;
   }, 0);
   return sum;
@@ -22,6 +22,10 @@ export const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOADING:
     return { ...state, loading: true };
+  // case LOGIN_PAGE:
+  //   return {
+  //     ...state, email: action.payload.email,
+  //   };
   case COINS:
     return {
       ...state,

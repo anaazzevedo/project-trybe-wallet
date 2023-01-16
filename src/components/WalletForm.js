@@ -42,6 +42,7 @@ class WalletForm extends Component {
     this.setState((prev) => ({
       valueUser: '',
       description: '',
+      // currency: 'USD',
       id: prev.id + 1,
     }));
   };
